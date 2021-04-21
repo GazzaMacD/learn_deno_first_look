@@ -50,3 +50,19 @@ Deno.env.get("PRODUCTION");
 -   cli flags must come before the file
 -   testing is run from the command line `deno test`
 -   there is a built in watch flag in deno
+
+## Dependencies
+
+-   Deno trys to stay as close to a browser so use import from url
+-   Deno will download dependency once and cache it
+-   Deno will not let you import without the file extension
+-   can examine the dependencies by using `deno info <filename>`
+-   Present common convention is to use a deps.ts or deps.js to import all remote dependencies from url and then to export them from there and import from this file. (or module)
+-   There is some node compatiblity [node compatibilty](https://deno.land/std@0.91.0/node/README.md)
+
+## Permissions
+
+-   Permissions are allowed with flags
+-   Specificity of flags is allowed and is a good idea.
+-   `deno run --allow-read app.ts` would allow access to read the whole file system
+-   `deno run --allow-read=. app.ts` would only allow read access to the current directory
