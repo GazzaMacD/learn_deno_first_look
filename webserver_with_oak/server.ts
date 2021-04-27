@@ -1,8 +1,9 @@
-import { Application } from "https://deno.land/x/oak@v7.3.0/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak@v7.3.0/mod.ts";
 
 const PORT = 8000;
 
 const app = new Application();
+const router = new Router();
 
 /* Middleware  ============== */
 // Logger
@@ -20,10 +21,32 @@ app.use(async (ctx, next) => {
     ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-/* Responses  ============== */
-app.use((ctx) => {
-    ctx.response.body = "<h1>Hello World!</h1>";
+/* Routes  ============== */
+router.get("/", (ctx) => {
+    ctx.response.body = `
+    Response to ${ctx.request.method} HTTP Method request made to url '${ctx.request.url}'
+    `;
 });
 
+router.post("/", (ctx) => {
+    ctx.response.body = `
+    Response to ${ctx.request.method} HTTP Method request made to url '${ctx.request.url}'
+    `;
+});
+
+router.put("/", (ctx) => {
+    ctx.response.body = `
+    Response to ${ctx.request.method} HTTP Method request made to url '${ctx.request.url}'
+    `;
+});
+
+router.delete("/", (ctx) => {
+    ctx.response.body = `
+    Response to ${ctx.request.method} HTTP Method request made to url '${ctx.request.url}'
+    `;
+});
+
+app.use(router.allowedMethods());
+app.use(router.routes());
 console.info(`Server running on port ${PORT}`);
 await app.listen({ port: PORT });
